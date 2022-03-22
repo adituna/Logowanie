@@ -1,11 +1,15 @@
+import datetime
+
 def menu():
     text_0 = '\n'
     text_1 = 'Menu logowania'
 
     text_2 =('''
         Aby zalogować się wybierz - 1
-        Aby wyjść wybierz - 0
+        Jeśli nie posiadasz konta wybierz - 2
+        Aby wyjść wybierz - 3
         ''')
+    print('\n'+ datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     print(text_0 + text_1.center(40))
     print(text_2.center(20))
 
@@ -22,3 +26,4 @@ def have_login():
     print(text_2.center(20))
 
     return
+
