@@ -1,0 +1,24 @@
+def menu():
+    text_0 = '\n'
+    text_1 = 'Menu logowania'
+
+    text_2 =('''
+        Aby zalogować się wybierz - 1
+        Aby wyjść wybierz - 0
+        ''')
+    print(text_0 + text_1.center(40))
+    print(text_2.center(20))
+
+    return
+
+def have_login():
+    text = ('\n')
+    text_1 = ('Czy posiadasz już login i hasło ? ')
+    text_2 =('''
+        Czy chcesz się zalogować lub utworzyć nowe konto ? - Y
+        Aby wyjść wybierz - N
+        ''')
+    print(text + text_1.center(40))
+    print(text_2.center(20))
+
+    return
