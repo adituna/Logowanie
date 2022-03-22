@@ -17,22 +17,19 @@ users = {}
 menu_functions.menu()
 menu_login_yes_no = input('Y/N? ').upper()
 
-
 try:
     with open('users.txt','r') as file:
         data = file.read()
         users = json.loads(data)
 except:
-    print('Brak pliku z danymi')
-
-print('Dostępni użytkownicy: ',users)
+    print('\n')
 
 while logged == False:
     #funkcja if pytajaca czy uzytkownik posiada konto
     if menu_login_yes_no == 'Y':
-        choose_2 = input('Czy posiadasz już konto? Y/N? ').upper()
+        has_account = input('Czy posiadasz już konto? Y/N? ').upper()
         #funkcja if pytająca czy chce utworzyć konto, gdzy go nie ma
-        if choose_2 == 'Y':
+        if has_account == 'Y':
             login = input('Podaj login: ')
             password = input('Podaj hasło: ')
                 # sprawdzenie czy login i password istnieją
@@ -44,10 +41,10 @@ while logged == False:
                 input('Press any key')
                 logged = True
 
-        elif choose_2 == 'N':
-            choose_3 = input('Czy chcesz utworzyć konto? Y/N ? ').upper()
+        elif has_account == 'N':
+            create_account = input('Czy chcesz utworzyć konto? Y/N ? ').upper()
         # tworzenie login i password
-            if choose_3 == 'Y':
+            if create_account == 'Y':
                 login = input('Podaj swój nowy login: ')
                 choose_password = input('Hasło automatyczne (1). Hasło własne (0): ')
 
