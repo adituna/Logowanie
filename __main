@@ -15,54 +15,57 @@ users = {}
 
 #this function draws menu + current date 
 menu_functions.menu()
-menu_login_yes_no = input('Y/N? ').upper()
+#menu_choose_option = input('Wybierz 1, 2 lub 3 >>>  ')
 
 try:
-    with open('users.txt','r') as file:
-        data = file.read()
-        users = json.loads(data)
+    with open('users.txt','r') as login_file:
+        users = json.loads(login_file)
+    
 except:
-    print('\n')
+    with open('users.txt','w') as login_file:
+        login_file.write(json.dumps(users))
 
 while logged == False:
-    #funkcja if pytajaca czy uzytkownik posiada konto
-    if menu_login_yes_no == 'Y':
-        has_account = input('Czy posiadasz już konto? Y/N? ').upper()
-        #funkcja if pytająca czy chce utworzyć konto, gdzy go nie ma
-        if has_account == 'Y':
-            login = input('Podaj login: ')
+    menu_choose_option = input('Wybierz 1, 2 lub 3 >>>  ')
+
+    if menu_choose_option == '1':
+        login = input('Podaj login: ') 
+        if login in users:
             password = input('Podaj hasło: ')
-                # sprawdzenie czy login i password istnieją
-            if login in users and users[login] == password:
+            if users[login] == password:
                 print('Zalogowałeś się')
                 with open('logi.txt','a') as file:
-                    file.write('Uzytkownik '+ str(login) + ' zalogował się ' + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                    file.write('Uzytkownik '+ str(login) + ' zalogowal się ' + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                     file.write('\n')
                 input('Press any key')
                 logged = True
+        else:
+            print('Nie ma takiego użytkownika')
+            continue
+    elif menu_choose_option == '2':
+        login = input('Wpisz swój nowy login: ')
+        if login in users:
+            print('Wybrany login jest już zajęty. Wybierz inny')
+            
+        choose_password = input('Hasło automatyczne (0). Hasło własne (1): ')
+        if choose_password == '0':
+            password = password_generator()
+            print(f'Twój login: {login} \nOto twoje hasło: {password}')
+            new_data = {login:password}
+            users.update(new_data)
 
-        elif has_account == 'N':
-            create_account = input('Czy chcesz utworzyć konto? Y/N ? ').upper()
-        # tworzenie login i password
-            if create_account == 'Y':
-                login = input('Podaj swój nowy login: ')
-                choose_password = input('Hasło automatyczne (1). Hasło własne (0): ')
+            with open('users.txt','w') as login_file:
+                login_file.write(json.dumps(users)) 
+            continue   
 
-                if choose_password == '0':
-                    password = input('Podaj hasło: ')
-                else:
-                    password = password_generator()
-                    print('Oto twoje hasło: ',password)      
-            else:
-                password = password_generator()
-                continue
-
-        new_data = {login:password}
-        users.update(new_data)
-        with open('users.txt','w') as file:
-            file.write(json.dumps(users))
-
-        continue
-    else:
+        else:
+            password = input('Podaj hasło: ')
+            print(f'Twój login: {login} \nOto twoje hasło: {password}')
+            new_data = {login:password}
+            users.update(new_data)
+            with open('users.txt','w') as login_file:
+                login_file.write(json.dumps(users))      
+            continue
+    elif menu_choose_option == '3':
         print('Zamykam program')
         break
